@@ -92,11 +92,7 @@ class MiscellaneousCog(commands.Cog):
         :return:
         """
         message = ctx.message
-        if message.author.id == 169896955298709505 or message.author.id == 514151264016400384:
-            await message.channel.send("Goodbye! {}".format(self.client.get_emoji(455209722719633408)))
-            await self.client.close()
-        else:
-            await message.channel.send("You are not my master!")
+        # await self.client.close()
 
     @commands.command()
     async def goodbot(self, ctx):
@@ -347,7 +343,7 @@ class MiscellaneousCog(commands.Cog):
             link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
             actualImages.append((link, typeOf))
         # print(url)
-        #TODO MAKE THIS A SPEARATE QUERY FUNCTION
+        # TODO MAKE THIS A SPEARATE QUERY FUNCTION
         print(actualImages)
         if len(actualImages) == 0:
             time.sleep(0.4)

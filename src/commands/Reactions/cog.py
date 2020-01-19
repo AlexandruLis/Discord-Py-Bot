@@ -20,8 +20,7 @@ class ReactionsCog(commands.Cog):
         :return: None
         """
         message = ctx.message
-        if not message.author.top_role.permissions.administrator and (
-                message.author.id != 169896955298709505 or message.author.id == 514151264016400384):
+        if not message.author.top_role.permissions.administrator:
             await message.channel.send("You have no power here")
             return
         try:
@@ -47,8 +46,7 @@ class ReactionsCog(commands.Cog):
         """
         controller = ReactionsController(self.client, ctx.guild)
         message = ctx.message
-        if message.author.top_role.permissions.administrator \
-                or message.author.id == 169896955298709505 or message.author.id == 514151264016400384:
+        if message.author.top_role.permissions.administrator:
             controller.remove(message.content.split()[1])
             await message.channel.send("Removed Sucessfully!")
         else:

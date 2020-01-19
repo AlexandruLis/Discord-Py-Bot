@@ -45,8 +45,7 @@ class CopyPastaCog(commands.Cog):
         controller = CopyPastaController(ctx.guild)  # Create a controller
         message = ctx.message  # Obtain the message class
         # Check permissions
-        if message.author.top_role.permissions.administrator \
-                or message.author.id == 169896955298709505 or message.author.id == 514151264016400384:  # backdoor
+        if message.author.top_role.permissions.administrator:
             status = controller.removeByValue(message.content)  # Run the remove command with the message text
             if status == 1:  # Successfully removed
                 await message.channel.send("Removed!")
@@ -68,8 +67,7 @@ class CopyPastaCog(commands.Cog):
         controller = CopyPastaController(ctx.guild)  # Create a controller
         message = ctx.message  # Obtain the message class
         # Check permissions
-        if message.author.top_role.permissions.administrator \
-                or message.author.id == 169896955298709505 or message.author.id == 514151264016400384:  # backdoor
+        if message.author.top_role.permissions.administrator:
             status = controller.remove(message.content)  # Run the remove command with the message text
             if status == 1:  # Successfully removed
                 await message.channel.send("Removed!")
