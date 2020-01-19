@@ -49,7 +49,8 @@ Paste and fill it with your token
 
 # Commands:  
 
-Translate:   
+Translate:  
+
     -Translate is a automatic eventFunction that triggers whenever it finds a message in one of the settings languages, see Settings
 
 CopyPasta = Bot responds to keywords by posting a message    
@@ -142,11 +143,11 @@ Youtube = Parsing Youtube
 Blacklist = Bot blacklists a message/word/emoji/user !in the posted channel! TODO: make it blacklist serverwide
     
     -blacklist: 
-    
->Example: .blacklist word idiot
->Example: .blacklist user @MentionUser # This is troll imo as it just deletes whatever they post as soon as it sees it, doesn't stop @MentionUser from spamming the channel
->Example: .blacklist message @MentionUser # The exact sentence they said gets deleted whenever posted
->Example: .blacklist emoji @MentionUser # Blocks all the emojis in the last @MentionUser message that contains Emojis
+      
+>Example: .blacklist word idiot     
+>Example: .blacklist user @MentionUser # This is troll imo as it just deletes whatever they post as soon as it sees it, doesn't stop @MentionUser from spamming the channel      
+>Example: .blacklist message @MentionUser # The exact sentence they said gets deleted whenever posted     
+>Example: .blacklist emoji @MentionUser # Blocks all the emojis in the last @MentionUser message that contains Emojis      
 
     
 Settings = Disable or enable bot features based on Modules or Commands
