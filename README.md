@@ -6,8 +6,10 @@
 Discord bot token: https://github.com/Chikachi/DiscordIntegration/wiki/How-to-get-a-token-and-channel-ID-for-Discord
 
 Reddit API info: https://stackoverflow.com/a/42304034
+
  # Disclaimer
  I'm not good at formatting .readme
+ 
  # Setup
 
  create a file called globals.py in directory "/classified"
@@ -45,8 +47,10 @@ Create a file called token.py in /classified/bot_token
 Paste and fill it with your token
 >bot_token = ""
 
-# Commands:   
+# Commands:  
+
 CopyPasta = Bot responds to keywords by posting a message    
+    
     -addpasta:  Add response to keyword 
     
 >Example: .addpasta test "test response" 1
@@ -70,20 +74,24 @@ Dictionary = Parsing trough urban dictionary
 >Example: .wotd
           
 DiscordBotVoice = Supposed to play music but it'll be added later   
+    
     -join:      Bot joins the voice channel the user is in   
     -leave:     Bot leaves voice   
          
 DiscordRateGirl (BETA) = Generates 2 PRNG values that stay consistent depending on day   
+    
     -rategirl:  Rates @User by 2 values, Hot and Crazy   
     
 >Example: .rategirl @User
          
          
 Miscellaneous = For filler commands that don't deserve their own class   
+    
     -avm:       Print avatar of pinged User   
     -badbot:    Same as goodbot       
     -cm:        Turns cm (height) to ft + inch (metric to imperial) by approximation   
     -dice:      Rolls 2 dice ( returns 2 values between 1-6)   
+    
     -erase:     Erase N messages (admin only)  
     
 >Example: .erase 5  # erases 5 messages
@@ -91,6 +99,7 @@ Miscellaneous = For filler commands that don't deserve their own class
     -ft:        Turns height ft.inch (Eg: 5.11) to cm (imperial to metric)      
     -img:       Returns the first result from google images      
     -goodbot:   Filler command. Bot sends a message on call.      
+    
     -hide:      Removes the messages of a user from a channel (admin only)
     
 >Example: .hide @User 5  # Delete 5 messages of @User
@@ -100,6 +109,7 @@ Miscellaneous = For filler commands that don't deserve their own class
     -lb:        Turn lb into kg (imperial to metric)   
          
 Reactions = Bot adds a reaction to a message that contains certain keywords   
+    
     -addreact:  Add a reaction to a keyword/keywords  
     
 >Example: .addreact love :heart:
@@ -126,6 +136,7 @@ Youtube = Parsing Youtube
     -yt:        First result from youtube of a topic     
     
 Blacklist = Bot blacklists a message/word/emoji/user !in the posted channel! TODO: make it blacklist serverwide
+    
     -blacklist: 
     
 >Example: .blacklist word idiot
@@ -135,6 +146,7 @@ Blacklist = Bot blacklists a message/word/emoji/user !in the posted channel! TOD
 
     
 Settings = Disable or enable bot features based on Modules or Commands
+    
     - .settings get/add/reset # TODO implement update and check json validity
     
 > Example: .settings add {some json} # see setup default_json_for_guild
