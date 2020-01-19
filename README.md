@@ -48,8 +48,10 @@ Paste and fill it with your token
 >bot_token = ""
 
 
-Libraries that the bot uses:
-https://github.com/AlexandruLis/Discord-Py-Bot/blob/master/Libraries
+# Libraries:
+https://github.com/AlexandruLis/Discord-Py-Bot/blob/master/Libraries        
+For windows you will need: https://www.lfd.uci.edu/~gohlke/pythonlibs/    
+Translation thanks to: https://stackoverflow.com/a/47106810
 # Commands:  
 
 Translate:  
