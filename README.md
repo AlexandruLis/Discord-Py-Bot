@@ -48,7 +48,8 @@ Paste and fill it with your token
 >bot_token = ""
 
 
-Libraries: TODO
+Libraries that the bot uses:
+https://github.com/AlexandruLis/Discord-Py-Bot/blob/master/Libraries
 # Commands:  
 
 Translate:  
