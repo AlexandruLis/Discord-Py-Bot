@@ -49,6 +49,9 @@ Paste and fill it with your token
 
 # Commands:  
 
+Translate:   
+    -Translate is a automatic eventFunction that triggers whenever it finds a message in one of the settings languages, see Settings
+
 CopyPasta = Bot responds to keywords by posting a message    
     
     -addpasta:  Add response to keyword 
@@ -97,7 +100,8 @@ Miscellaneous = For filler commands that don't deserve their own class
 >Example: .erase 5  # erases 5 messages
 
     -ft:        Turns height ft.inch (Eg: 5.11) to cm (imperial to metric)      
-    -img:       Returns the first result from google images      
+    -img:       Returns the first result from google images 
+    -gif        Return the first gif or none       
     -goodbot:   Filler command. Bot sends a message on call.      
     
     -hide:      Removes the messages of a user from a channel (admin only)
