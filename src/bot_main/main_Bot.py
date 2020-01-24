@@ -63,7 +63,9 @@ async def on_message(message):
     :param message: Message object from Discord.py
     :return: None
     """
-    if message.author == client.user or not is_enabled(message):
+    if message.author == client.user:
+        return
+    if len(message.content) > 0 and message.content[0] == "." and not is_enabled(message):
         return
     # if message.author.id != 169896955298709505:
     #     return

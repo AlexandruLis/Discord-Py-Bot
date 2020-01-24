@@ -14,16 +14,13 @@ class Settings(commands.Cog):
         self.controller = SettingsController(guild)
 
     def add(self):
-        self.controller.add(self.jsonString)
-        return "Updated"
+        return self.controller.add(self.jsonString)
 
     def update(self):
-        self.controller.update(self.jsonString)
-        return "Added"
+        return self.controller.update(self.jsonString)
 
     def reset(self):
-        self.controller.remove(self.jsonString)
-        return "Reset successful"
+        return self.controller.remove(self.jsonString)
 
     def get(self):
         return "```\n" + self.controller.get() + "\n```"

@@ -11,10 +11,10 @@ class SettingsController:
         return self.settings.add(self.guild.id, jsonString)
 
     def update(self, jsonString):
-        self.settings.add(jsonString)  # TODO
+        return self.settings.update(jsonString)  # TODO
 
     def remove(self, guildId):
-        self.settings.remove(self.guild.id)
+        return self.settings.remove(self.guild.id)
 
     def get(self):
         return self.settings.get(self.guild.id)

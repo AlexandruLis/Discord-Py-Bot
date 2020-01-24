@@ -101,17 +101,14 @@ class MiscellaneousCog(commands.Cog):
         :param ctx: Context class from Discord.py
         :return: None
         """
-        message = ctx.message
-        await message.channel.send("ty fam {}".format(self.client.get_emoji(568167721532129301)))
+        pass
 
     @commands.command()
     async def badbot(self, ctx):
         """
         Same as goodbot
         """
-        message = ctx.message
-        await message.channel.send(self.client.get_emoji(521430122503471114))
-        await message.channel.send(self.client.get_emoji(521430137724731392))
+        pass
 
     @staticmethod
     def verify_vote(vote_list, new_vote):
@@ -329,7 +326,7 @@ class MiscellaneousCog(commands.Cog):
     @commands.command()
     async def gif(self, ctx):
         """
-        Searcher for a random image from google
+        Searcher for a random gif from google
         :param ctx:
         :return:
         """
@@ -344,7 +341,7 @@ class MiscellaneousCog(commands.Cog):
             actualImages.append((link, typeOf))
         # print(url)
         # TODO MAKE THIS A SPEARATE QUERY FUNCTION
-        print(actualImages)
+        # print(actualImages)
         if len(actualImages) == 0:
             time.sleep(0.4)
             soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
