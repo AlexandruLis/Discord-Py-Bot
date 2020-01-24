@@ -14,8 +14,12 @@ import sys
 import json
 import time
 import inspect
+import datetime
+import asyncio
 import re
 
+repeaters = []
+counter = 0
 votekick_on = 0
 
 
@@ -146,7 +150,7 @@ class MiscellaneousCog(commands.Cog):
         timer = 60
         current_timer = 0
         while current_timer < timer:
-            time.sleep(1)
+            await asyncio.sleep(1)
             async for message in ctx.channel.history(limit=50):
                 if message.content == "vote yes":
                     if MiscellaneousCog.verify_vote(voted, message.author.id):
@@ -200,6 +204,58 @@ class MiscellaneousCog(commands.Cog):
             return int(number)
         except ValueError:
             return -1
+
+    @commands.command()
+    async def cancel(self, ctx):
+        return
+        message_to_stop = int(ctx.message.content.split()[1])
+        global repeaters
+        global counter
+        if message_to_stop in repeaters:
+            repeaters.remove(message_to_stop)
+            counter -= 1
+
+    @commands.command()
+    async def repeat(self, ctx):
+        return
+        global repeaters
+        global counter
+        arguments = ctx.message.content.split('"')
+        interval = arguments[0].split()[1]
+        message = arguments[1]
+        # print(datetime.datetime.utcnow())
+        if interval.find(":") != -1:
+            pass
+            # TO DO daily at a certain hour
+        else:
+            async_counter = counter + 1
+            counter += 1
+            repeaters.append(async_counter)
+            interval = int(interval)
+            await ctx.channel.send('Start execution with id "{}"'.format(async_counter))
+            while True:
+                if async_counter in repeaters:
+                    await ctx.channel.send(message)
+                    await asyncio.sleep(interval)
+                else:
+                    await ctx.channel.send('Finished execution of "{}"'.format(async_counter))
+                    return
+
+    #         interval = int(interval)
+    #         next_message_time = time.time() + interval
+    #         print(time.time())
+    #         print(next_message_time)
+    #         while True:
+    #             async for ctx_message in ctx.channel.history(limit=30):
+    #                 if ctx_message.content == ctx.message.content:
+    #                     break
+    #                 if ctx_message.content.find(".cancel") != -1:
+    #                     await ctx.channel.send('Finished execution of "{}"'.format(message))
+    #                     return
+    #             if next_message_time < time.time():
+    #                 await ctx.channel.send(message)
+    #                 next_message_time = time.time() + interval
+    #             await asyncio.sleep(6)
 
     @commands.command()
     async def al(self, ctx):
@@ -343,13 +399,6 @@ class MiscellaneousCog(commands.Cog):
         # TODO MAKE THIS A SPEARATE QUERY FUNCTION
         # print(actualImages)
         if len(actualImages) == 0:
-            time.sleep(0.4)
-            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
-            for a in soup.find_all("div", {"class": "rg_meta"}):
-                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-                actualImages.append((link, typeOf))
-        if len(actualImages) == 0:
-            time.sleep(0.4)
             soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
             for a in soup.find_all("div", {"class": "rg_meta"}):
                 link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
