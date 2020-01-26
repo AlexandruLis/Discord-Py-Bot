@@ -5,9 +5,12 @@ from src.commands.copypasta.EventFunction import copypasta_on_msg, blacklistChec
 from src.commands.Reactions.EventFunction import react_to_msg
 from src.commands.Google.eventFunction import translate
 from src.commands.Settings.controller import SettingsController
+import multiprocessing
+import asyncio
 
 command_dictionary = ""
 client = commands.Bot(command_prefix=".")
+main_process = True
 
 
 def get_setting_commands():
@@ -26,9 +29,13 @@ async def on_ready():
     Runs when bot starts / connects to Discord
     :return: None
     """
+    from src.commands.Reminders.cog import reminders
+    reminders.startThread(item_dict, client, value)
     print('We have logged in as {0.user}'.format(client))
     global command_dictionary
     command_dictionary = get_setting_commands()
+    await check_for_reminders()
+
 
 
 @client.event
@@ -55,16 +62,34 @@ def is_enabled(message):
         return True
 
 
+async def check_for_reminders():
+    while True:
+        if value.value is not None:
+            for guild in client.guilds:
+                if guild.id == item_dict[value.value]['guild']:
+                    # print('FOUND GUILD')
+                    for channel in guild.channels:
+                        if channel.id == item_dict[value.value]['channel']:
+                            await channel.send(item_dict[value.value]['message'])
+                            item_dict.pop(value.value)
+                            value.value = None
+                            return
+        await asyncio.sleep(60)
+
+
 @client.event
-@commands.cooldown(1, 2)
 async def on_message(message):
     """
     Discord.py function. On message sent in any discord channel/server
     :param message: Message object from Discord.py
     :return: None
     """
+    # print(item_dict)
+    # print(value)
+
     if message.author == client.user:
         return
+
     if len(message.content) > 0 and message.content[0] == "." and not is_enabled(message):
         return
     # if message.author.id != 169896955298709505:
@@ -128,10 +153,14 @@ client.load_extension("src.commands.DiscordVoice.cog")
 client.load_extension("src.commands.RateGirl.cog")
 client.load_extension("src.commands.Blacklist.cog")
 client.load_extension("src.commands.Settings.cog")
-client.run(bot_token)
+client.load_extension("src.commands.Reminders.cog")
 
-# DONE Create the class for reactions triggered by keywords
-# STUPIDTODO create the class for bot messages that start with
+if __name__ == '__main__':
+    manager = multiprocessing.Manager()
+    item_dict = manager.dict()
+    value = manager.Value('i', None)
+    if main_process:
+        main_process = False
+        client.run(bot_token)
+
 # TODO make bot save images
-# TODO MAKE bot play music - bot can currently join/leave channels - postponed until bot is hosted
-# TODO HOST BOT on a server

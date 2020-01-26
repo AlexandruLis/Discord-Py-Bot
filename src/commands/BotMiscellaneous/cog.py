@@ -206,56 +206,8 @@ class MiscellaneousCog(commands.Cog):
             return -1
 
     @commands.command()
-    async def cancel(self, ctx):
-        return
-        message_to_stop = int(ctx.message.content.split()[1])
-        global repeaters
-        global counter
-        if message_to_stop in repeaters:
-            repeaters.remove(message_to_stop)
-            counter -= 1
-
-    @commands.command()
-    async def repeat(self, ctx):
-        return
-        global repeaters
-        global counter
-        arguments = ctx.message.content.split('"')
-        interval = arguments[0].split()[1]
-        message = arguments[1]
-        # print(datetime.datetime.utcnow())
-        if interval.find(":") != -1:
-            pass
-            # TO DO daily at a certain hour
-        else:
-            async_counter = counter + 1
-            counter += 1
-            repeaters.append(async_counter)
-            interval = int(interval)
-            await ctx.channel.send('Start execution with id "{}"'.format(async_counter))
-            while True:
-                if async_counter in repeaters:
-                    await ctx.channel.send(message)
-                    await asyncio.sleep(interval)
-                else:
-                    await ctx.channel.send('Finished execution of "{}"'.format(async_counter))
-                    return
-
-    #         interval = int(interval)
-    #         next_message_time = time.time() + interval
-    #         print(time.time())
-    #         print(next_message_time)
-    #         while True:
-    #             async for ctx_message in ctx.channel.history(limit=30):
-    #                 if ctx_message.content == ctx.message.content:
-    #                     break
-    #                 if ctx_message.content.find(".cancel") != -1:
-    #                     await ctx.channel.send('Finished execution of "{}"'.format(message))
-    #                     return
-    #             if next_message_time < time.time():
-    #                 await ctx.channel.send(message)
-    #                 next_message_time = time.time() + interval
-    #             await asyncio.sleep(6)
+    async def ping(self, ctx):
+        await ctx.send(':ping_pong: {0}ms'.format(round(self.client.latency, 3) * 1000))
 
     @commands.command()
     async def al(self, ctx):
