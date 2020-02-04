@@ -340,21 +340,20 @@ class MiscellaneousCog(commands.Cog):
         """
         url = 'https://www.google.com/search?tbm=isch&q=' + "+".join(ctx.message.content.split()[1:] + ["+gif"])
         header = {
-            'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/43.0.2357.134 Safari/537.36"}
-        soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/79.0.3945.130 Safari/537.36"}
+
         actualImages = []  # contains the link for Large original images, type of  image
-        for a in soup.find_all("div", {"class": "rg_meta"}):
-            link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-            actualImages.append((link, typeOf))
+        while len(actualImages) == 0:
+            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+            for a in soup.find_all("div", {"class": "rg_meta"}):
+                # print("fuck")
+                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
+                actualImages.append((link, typeOf))
+                # break
         # print(url)
         # TODO MAKE THIS A SPEARATE QUERY FUNCTION
         # print(actualImages)
-        if len(actualImages) == 0:
-            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
-            for a in soup.find_all("div", {"class": "rg_meta"}):
-                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-                actualImages.append((link, typeOf))
         try:
             gif_url = ''
             for imagesLinks in actualImages:
@@ -368,21 +367,26 @@ class MiscellaneousCog(commands.Cog):
                 embed.set_image(url=gif_url)
                 await ctx.channel.send(embed=embed)
             else:
+                print("no gifs")
                 await ctx.channel.send("Something went wrong! Try again later.")
         except IndexError:
+            print("fucking index error")
             await ctx.channel.send("Something went wrong! Try again later.")
 
     @commands.command()
     async def img(self, ctx):
         url = 'https://www.google.com/search?tbm=isch&q=' + "+".join(ctx.message.content.split()[1:])
         header = {
-            'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/43.0.2357.134 Safari/537.36"}
-        soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Chrome/79.0.3945.130 Safari/537.36"}
         actualImages = []  # contains the link for Large original images, type of  image
-        for a in soup.find_all("div", {"class": "rg_meta"}):
-            link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-            actualImages.append((link, typeOf))
+        while len(actualImages) == 0:
+            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+            for a in soup.find_all("div", {"class": "rg_meta"}):
+                # print("fuck")
+                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
+                actualImages.append((link, typeOf))
+                break
         # print(url)
         # print(actualImages)
         try:

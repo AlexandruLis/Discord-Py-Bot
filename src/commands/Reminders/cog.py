@@ -17,8 +17,25 @@ class RemindersCog(commands.Cog):
         unix_time = RemindersCog.convertToLocalTime(datetime.strptime(reminderTime, '%Y/%m/%d %H:%M')).timestamp()
 
         message = ' '.join(arguments[3:])
+        if int(unix_time) < time.time():
+            await ctx.channel.send("Cannot add a reminder in the past!")
+            return
+        reminders.add(int(unix_time),ctx.channel.guild.id, ctx.channel.id, ctx.message.author.id, message)
+        await ctx.channel.send("Added at {} UST with an accuracy of -+ 5 minutes".format(reminderTime))
 
-        reminders.add(int(unix_time),ctx.channel.guild.id, ctx.channel.id, message)
+    @commands.command()
+    async def remindme(self, ctx):
+        arguments = ctx.message.content.split()
+        reminderTime = "".join(arguments[1])
+
+        unix_time = time.time() + int(reminderTime)*60
+
+        message = ' '.join(arguments[2:])
+        if int(unix_time) < time.time():
+            await ctx.channel.send("Cannot add a reminder in the past!")
+            return
+        reminders.add(int(unix_time), ctx.channel.guild.id, ctx.channel.id, ctx.message.author.id, message)
+        await ctx.channel.send("Added in {} -+ 2 minutes from now".format(reminderTime))
 
     @staticmethod
     def convertToLocalTime(localTime):
@@ -84,4 +101,4 @@ class RemindersCog(commands.Cog):
 def setup(bot):
     bot.add_cog(RemindersCog(bot))
     global reminders
-    reminders = RemindersThreaded()
+    reminders = RemindersThreaded(reminders_file_path)

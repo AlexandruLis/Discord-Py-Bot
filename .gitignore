@@ -126,3 +126,4 @@ classified/globals.py
 classified/bot_token/token.py
 src/bot_main/test.py
 src/bot_main/testererere.py
+*.txt

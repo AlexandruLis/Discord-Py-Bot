@@ -30,11 +30,13 @@ async def on_ready():
     :return: None
     """
     from src.commands.Reminders.cog import reminders
+    item_dict = manager.dict(reminders.load_dict_from_file())
+    print(item_dict)
     reminders.startThread(item_dict, client, value)
     print('We have logged in as {0.user}'.format(client))
     global command_dictionary
     command_dictionary = get_setting_commands()
-    await check_for_reminders()
+    await check_for_reminders(item_dict)
 
 
 
@@ -62,18 +64,24 @@ def is_enabled(message):
         return True
 
 
-async def check_for_reminders():
+async def check_for_reminders(item_dictionary):
     while True:
         if value.value is not None:
             for guild in client.guilds:
-                if guild.id == item_dict[value.value]['guild']:
+                if value.value is None:
+                    break
+                if guild.id == item_dictionary[value.value]['guild']:
                     # print('FOUND GUILD')
                     for channel in guild.channels:
-                        if channel.id == item_dict[value.value]['channel']:
-                            await channel.send(item_dict[value.value]['message'])
-                            item_dict.pop(value.value)
-                            value.value = None
-                            return
+                        if value.value is None:
+                            break
+                        if channel.id == item_dictionary[value.value]['channel']:
+                            for user in guild.members:
+                                if user.id == item_dictionary[value.value]['user']:
+                                    await channel.send("{} {}".format(user.mention, item_dictionary[value.value]['message']))
+                                    item_dictionary.pop(value.value)
+                                    value.value = None
+                                    break
         await asyncio.sleep(60)
 
 
