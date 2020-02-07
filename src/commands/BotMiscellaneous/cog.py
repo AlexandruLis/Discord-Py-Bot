@@ -344,33 +344,20 @@ class MiscellaneousCog(commands.Cog):
                           "Chrome/79.0.3945.130 Safari/537.36"}
 
         actualImages = []  # contains the link for Large original images, type of  image
-        while len(actualImages) == 0:
-            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
-            for a in soup.find_all("div", {"class": "rg_meta"}):
-                # print("fuck")
-                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-                actualImages.append((link, typeOf))
-                # break
-        # print(url)
-        # TODO MAKE THIS A SPEARATE QUERY FUNCTION
-        # print(actualImages)
+        soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+        string_of_soup = str(soup)
+        x = re.findall('(https:)([a-z\-_0-9\/\:\.]*\.(gif))', string_of_soup)
+        for link in x:
+            actualLink = ''.join(link[:-1])
+            if actualLink.find('gstatic') == -1 and actualLink.find('i.gif') == -1:
+                actualImages.append(actualLink)
         try:
-            gif_url = ''
-            for imagesLinks in actualImages:
-                if imagesLinks[1] == 'gif':
-                    print(gif_url)
-                    gif_url = imagesLinks[0]
-                    break
-
-            if gif_url != '':
-                embed = discord.Embed(title='@' + ctx.message.author.display_name, description=url, color=0xf0f0f0)
-                embed.set_image(url=gif_url)
-                await ctx.channel.send(embed=embed)
-            else:
-                print("no gifs")
-                await ctx.channel.send("Something went wrong! Try again later.")
+            # print(actualImages)
+            print(actualImages[0])
+            embed = discord.Embed(title='@' + ctx.message.author.display_name, description=url, color=0xf0f0f0)
+            embed.set_image(url=actualImages[0])
+            await ctx.channel.send(embed=embed)
         except IndexError:
-            print("fucking index error")
             await ctx.channel.send("Something went wrong! Try again later.")
 
     @commands.command()
@@ -380,18 +367,19 @@ class MiscellaneousCog(commands.Cog):
             'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                           "Chrome/79.0.3945.130 Safari/537.36"}
         actualImages = []  # contains the link for Large original images, type of  image
-        while len(actualImages) == 0:
-            soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
-            for a in soup.find_all("div", {"class": "rg_meta"}):
-                # print("fuck")
-                link, typeOf = json.loads(a.text)["ou"], json.loads(a.text)["ity"]
-                actualImages.append((link, typeOf))
-                break
-        # print(url)
-        # print(actualImages)
+
+        soup = BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url, headers=header)), 'html.parser')
+        string_of_soup = str(soup)
+        x = re.findall('(https:)([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png))', string_of_soup)
+        for link in x:
+            actualLink = ''.join(link[:-1])
+            if actualLink.find('gstatic') == -1 and actualLink.find('www.png') == -1:
+                actualImages.append(actualLink)
         try:
+            # print(actualImages)
+            print(actualImages[0])
             embed = discord.Embed(title='@' + ctx.message.author.display_name, description=url, color=0xf0f0f0)
-            embed.set_image(url=actualImages[0][0])
+            embed.set_image(url=actualImages[0])
             await ctx.channel.send(embed=embed)
         except IndexError:
             await ctx.channel.send("Something went wrong! Try again later.")
