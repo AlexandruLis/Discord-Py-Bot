@@ -162,6 +162,7 @@ client.load_extension("src.commands.RateGirl.cog")
 client.load_extension("src.commands.Blacklist.cog")
 client.load_extension("src.commands.Settings.cog")
 client.load_extension("src.commands.Reminders.cog")
+client.load_extension("src.commands.Memes.cog")
 
 if __name__ == '__main__':
     manager = multiprocessing.Manager()

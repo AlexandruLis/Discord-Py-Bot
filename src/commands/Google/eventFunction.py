@@ -28,6 +28,9 @@ async def translate(message):
             translation = str(TextBlob(message_content).translate())
         except NotTranslated:
             return
-        embed = discord.Embed(title='@' + message.author.display_name + " said", description=translation,
+        if translation.lower() == message_content.lower():
+            return
+        embed = discord.Embed(title='@' + message.author.display_name + " said [{}]".format(guess),
+                              description=translation,
                               color=0xf0f0f0)
         await message.channel.send(embed=embed)

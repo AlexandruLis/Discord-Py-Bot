@@ -222,7 +222,7 @@ class RedditCog(commands.Cog):
             dict_holder = pickle.load(file)
             file.close()
             return dict_holder
-        except EOFError or FileNotFoundError:
+        except (EOFError, FileNotFoundError):
             return {}
 
 
