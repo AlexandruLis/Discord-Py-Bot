@@ -52,6 +52,10 @@ class RemindersThreaded:
                 for key in self.item_dict.keys():
                     # print(self.item_dict[key]['time'])
                     if len(self.item_dict) and self.item_dict[key]['time'] - time.time() < 60:
+                        if self.item_dict[key]['repeatable']:
+                            self.add(self.item_dict[key]['time'] + 86400, self.item_dict[key]['guild'],
+                                     self.item_dict[key]['channel'], self.item_dict[key]['user'],
+                                     self.item_dict[key]['message'], self.item_dict[key]['repeatable'], key)
                         self.key.value = key
                         break
             time.sleep(30)
@@ -70,8 +74,11 @@ class RemindersThreaded:
         # await client.close()
         # await self.item_dict[key]['channel'].send(self.item_dict[key]['message'])
 
-    def add(self, time, guild, channel, userId, message):
-        self.item_dict[len(self.item_dict) + 1] = {'guild': guild, 'channel': channel, 'user': userId,
-                                                   'message': message, 'time': time}
+    def add(self, time, guild, channel, userId, message, repeatable=False, key=None):
+        position = len(self.item_dict) + 1
+        if repeatable and key != None:
+            position = key
+        self.item_dict[position] = {'guild': guild, 'channel': channel, 'user': userId,
+                                    'message': message, 'time': time, 'repeatable': repeatable}
         print(self.item_dict.copy())
         self.save_dict_to_file()

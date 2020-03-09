@@ -79,7 +79,8 @@ async def check_for_reminders(item_dictionary):
                             for user in guild.members:
                                 if user.id == item_dictionary[value.value]['user']:
                                     await channel.send("{} {}".format(user.mention, item_dictionary[value.value]['message']))
-                                    item_dictionary.pop(value.value)
+                                    if not item_dictionary[value.value]['repeatable']:
+                                        item_dictionary.pop(value.value)
                                     value.value = None
                                     break
         await asyncio.sleep(60)

@@ -10,17 +10,18 @@ reminders = None
 
 class RemindersCog(commands.Cog):
     @commands.command()
-    async def remind(self, ctx):
-        arguments = ctx.message.content.split()
-        reminderTime = "".join(arguments[1]) + ' ' + "".join(arguments[2])
+    async def remind(self, ctx, date, message, repeatable):
+        if repeatable == 'True' or repeatable == '1':
+            repeatable = True
+        else:
+            repeatable = False
 
+        reminderTime = date
         unix_time = RemindersCog.convertToLocalTime(datetime.strptime(reminderTime, '%Y/%m/%d %H:%M')).timestamp()
-
-        message = ' '.join(arguments[3:])
         if int(unix_time) < time.time():
             await ctx.channel.send("Cannot add a reminder in the past!")
             return
-        reminders.add(int(unix_time),ctx.channel.guild.id, ctx.channel.id, ctx.message.author.id, message)
+        reminders.add(int(unix_time), ctx.channel.guild.id, ctx.channel.id, ctx.message.author.id, message, repeatable)
         await ctx.channel.send("Added at {} UST with an accuracy of -+ 5 minutes".format(reminderTime))
 
     @commands.command()
@@ -28,7 +29,7 @@ class RemindersCog(commands.Cog):
         arguments = ctx.message.content.split()
         reminderTime = "".join(arguments[1])
 
-        unix_time = time.time() + int(reminderTime)*60
+        unix_time = time.time() + int(reminderTime) * 60
 
         message = ' '.join(arguments[2:])
         if int(unix_time) < time.time():
