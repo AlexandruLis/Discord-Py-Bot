@@ -14,7 +14,7 @@ class YoutubeCog(commands.Cog):
         self.client = bot
 
     @commands.command()
-    async def yt(self, ctx):
+    async def ytm(self, ctx):
         """
         First result from youtube of a topic
         :param ctx: the full discord message from the user as a Context class from Discord.py

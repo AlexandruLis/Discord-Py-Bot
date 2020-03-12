@@ -82,3 +82,15 @@ class RemindersThreaded:
                                     'message': message, 'time': time, 'repeatable': repeatable}
         print(self.item_dict.copy())
         self.save_dict_to_file()
+
+    def remove(self, userId, msg_key):
+        if len(self.item_dict):
+            for item in self.item_dict.keys():
+                print(item, userId, msg_key)
+                if self.item_dict[item]['user'] == userId:
+                    if self.item_dict[item]['message'].find(msg_key) != -1:
+                        self.item_dict.pop(item)
+                        self.save_dict_to_file()
+                        print(self.item_dict)
+                        return True
+            return False

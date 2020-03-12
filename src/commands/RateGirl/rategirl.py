@@ -55,13 +55,17 @@ class RateGirl:
 
     @staticmethod
     def generate_random_values(user_id: float):
-        a = 12345
+        a = 1664525
         m = 2 ** 32
-        seed = int(time.mktime(datetime.date.today().timetuple()) / 100000)
+        time_int = int(time.mktime(datetime.date.today().timetuple()) / 50000)
+        print(time_int)
+        seed = 958736
         # PRNG
+        for i in range(int(time_int /5)):
+            seed = ((a * seed + user_id) % m)
         seed = ((a * seed + user_id) % m)
         hot = round((seed / m) * 10, 2)
-        for i in range(5):
+        for i in range(time_int):
             seed = ((a * seed + user_id) % m)
         crazy = round((seed / m) * 10, 2)
 

@@ -67,11 +67,12 @@ class DiscordRateGirl(commands.Cog):
 
             print(hot_value, crazy_value, hot_position, crazy_position, result)
             self.draw_the_picture(hot_position, crazy_position)
-
+            from classified.bot_token.rategirl import rating_message
             embed = discord.Embed()
             embed.add_field(name='Hot', value=str(hot_value))
             embed.add_field(name='Crazy', value=str(crazy_value))
-            embed.add_field(name='Status', value=result, inline=False)
+            embed.add_field(name='Status', value=result)
+            embed.add_field(name='Advice', value=rating_message[result], inline=False)
             link = await self.generate_picture_link()
             embed.set_image(url=link)
             await ctx.channel.send(embed=embed)  # Send formatted message
