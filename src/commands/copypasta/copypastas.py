@@ -20,6 +20,7 @@ class Quotes:
         self.quotesDict = self.loadDict()
         if self.quotesDict is None:  # No dict found, make an empty one
             self.quotesDict = {}
+            self.saveDict()
 
     def saveDict(self):
         """

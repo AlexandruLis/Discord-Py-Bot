@@ -6,6 +6,12 @@ from json import JSONDecodeError
 
 
 class Settings(PickleDefaultContainer):
+
+    def __init__(self, path, gid):
+        super().__init__(path)
+        if self.item_dict == {}:
+            self.item_dict[gid] = self.get(gid)
+
     def get(self, guildId):
         try:
             return json.dumps(self.item_dict[guildId], sort_keys=True, indent=2)

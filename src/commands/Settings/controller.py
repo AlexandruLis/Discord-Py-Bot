@@ -4,7 +4,7 @@ from classified.globals import settings_file_path
 
 class SettingsController:
     def __init__(self, guild):
-        self.settings = Settings(settings_file_path + str(guild.id))  # The dictionary of copypastas read from file)
+        self.settings = Settings(settings_file_path + str(guild.id), guild.id)  # The dictionary of copypastas read from file)
         self.guild = guild
 
     def add(self, jsonString):

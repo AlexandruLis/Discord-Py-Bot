@@ -15,6 +15,7 @@ class PickleDefaultContainer:
         self.item_dict = self.load_dict_from_file()
         if self.item_dict is None:  # No dict found, make an empty one
             self.item_dict = {}
+            self.save_dict_to_file()
 
     def save_dict_to_file(self):
         """

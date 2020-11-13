@@ -7,17 +7,11 @@ class QuotesCog(commands.Cog):
 
     def __init__(self, bot):
         self.client = bot
-        # self.controller = CopyPastaController(bot.ctx.guild)
 
     @commands.command(pass_context=True)
     async def addQ(self, ctx, key, quote, bits, *args):
         """
-        Add response to keyword
-        Adds a:
-        -Bot responds with a message(also known as a copypasta, thus the name)
-        once a key message is sent in the discord.
-        Requires:
-         -Admin rights to add a message
+        Add quote, args: key, quote, bits
         :param ctx: Context class from Discord.py
         :return: None
         """
@@ -26,7 +20,7 @@ class QuotesCog(commands.Cog):
         quotesController = QuotesController(ctx.guild)  # Create the controller object for the specific guild
 
         status = quotesController.add(key, quote, bits)
-        if status == -1:  # Invalid pasta length
+        if status == -1:  # Invalid quote length
             await ctx.channel.send("Error: limit is 3-100 characters")
         elif status == 0:  # There's already a key with that value
             await ctx.channel.send("Error: Quote already exists")
@@ -83,7 +77,7 @@ class QuotesCog(commands.Cog):
         :param ctx: Discord.py Context
         :return: None
         """
-        if not validateAdmin(ctx.message):
+        if not await validateAdmin(ctx.message):
             return
 
         result = QuotesController(ctx.guild).set_bits(key, bits)

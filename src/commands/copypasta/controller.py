@@ -1,18 +1,15 @@
 from src.commands.copypasta.copypastas import Quotes
-from classified.globals import copypasta_file_path
+from classified.globals import quotes_file_path
 
 
 class QuotesController:
-    """
-    A controller for the CopyPasta Class
-    """
 
     def __init__(self, guild):
         """
         Loads the file
         """
         self.guild = guild  # The discord channel
-        self.quotes = Quotes(copypasta_file_path + str(guild.id))  # generic path + g_id identifier
+        self.quotes = Quotes(quotes_file_path + str(guild.id))  # generic path + g_id identifier
 
     def add(self, key: str, quote: str, bits):
         """
@@ -29,17 +26,17 @@ class QuotesController:
 
     def get(self, key: str):
         """
-        Returns a copy pasta / message for key
+        Returns a message for key
         :param key: a string/ key / message that triggers a keyword
-        :return: string, a copypasta
+        :return: quote
         """
         return self.quotes.quotesDict[key]
 
     def remove(self, key):
         """
-        Removes a copypasta
-        :param key: key of the copypasta to be removed
-        :return: status = if the copy pasta was found and removed or not
+        Remove a quote
+        :param key:
+        :return: status = action result
         """
         status = self.quotes.removeQuote(key)
         self.quotes.saveDict()
@@ -54,7 +51,7 @@ class QuotesController:
     # if that then do this
     def get_dict(self):
         """
-        Returns the dictionary of copypastas
+        Returns the dictionary
         :return: dictionary
         """
         return self.quotes.quotesDict
