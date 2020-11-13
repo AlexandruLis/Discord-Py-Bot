@@ -1,4 +1,4 @@
-from src.commands.copypasta.controller import CopyPastaController
+from src.commands.copypasta.controller import QuotesController
 from src.commands.Blacklist.blacklistStorage import Blacklist
 from classified.globals import blacklist_file_path
 import time
@@ -7,29 +7,30 @@ from src.commands.Settings.controller import SettingsController
 last_used_time = 0  # A global cooldown time
 
 
-async def copypasta_on_msg(message):
+async def quoteMsg(message):
     """
     Used to check if the message is  copy pasta.
     Full implementation in copypasta
     :param message: Discord.py message Class
     :return: None
     """
-    global last_used_time  # Load global
-    # Admins get to dodge the cooldown
+    global last_used_time  # Init global cooldown
+    # Admin has 0 cd
     if not message.author.top_role.permissions.administrator:
-        # If user is not an admin and triggers a copypasta during the cooldown stop executing
+        # Non-Admin can't trigger during cd
         if last_used_time + 15 > time.time():
             return
     if not SettingsController(message.guild).get_setting("copypasta", "respond"):
         return
-    pasta_controller = CopyPastaController(message.guild)  # Load the controller
+    quotesDict = QuotesController(message.guild).get_dict()  # Load the controller
+    content = message.content
 
-    if message.content in pasta_controller.pastas.pasta_dict:  # If the message is in the dict keys
-        contents = pasta_controller.get_dict()[message.content]  # Found
-        if contents[1] == 1:  # If bits for the copypasta are set to 1 remove the trigger message
+    if message.content in quotesDict:  # If the message is in the dict keys
+        quoteData = quotesDict[content]  # Found
+        if quoteData[1] == 1:  # If bits for the copypasta are set to 1 remove the trigger message
             await message.delete()
-        print(pasta_controller.get_dict())
-        await message.channel.send(contents[0])  # Print the copypasta
+        # print(quotesController.get_dict())
+        await message.channel.send(quoteData[0])  # Print the copypasta
         return
 
 

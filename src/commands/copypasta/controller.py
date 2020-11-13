@@ -1,8 +1,8 @@
-from src.commands.copypasta.copypastas import CopyPastas
+from src.commands.copypasta.copypastas import Quotes
 from classified.globals import copypasta_file_path
 
 
-class CopyPastaController:
+class QuotesController:
     """
     A controller for the CopyPasta Class
     """
@@ -12,20 +12,20 @@ class CopyPastaController:
         Loads the file
         """
         self.guild = guild  # The discord channel
-        self.pastas = CopyPastas(copypasta_file_path + str(guild.id))  # The dictionary of copypastas read from file
+        self.quotes = Quotes(copypasta_file_path + str(guild.id))  # generic path + g_id identifier
 
-    def add(self, string: str):
+    def add(self, key: str, quote: str, bits):
         """
-        Add a copy pasta
-        :param string: message.context from Discord.py
+        Add a quote
+        TODO lol
         :return:
         """
-        status = self.pastas.add_pasta(string)
+        status = self.quotes.addQuote(key, quote, bits)
         if status == 0:
             return 0
         elif status == -1:
             return -1
-        self.pastas.save_dict_to_file()
+        self.quotes.saveDict()
 
     def get(self, key: str):
         """
@@ -33,7 +33,7 @@ class CopyPastaController:
         :param key: a string/ key / message that triggers a keyword
         :return: string, a copypasta
         """
-        return self.pastas.pasta_dict[key]
+        return self.quotes.quotesDict[key]
 
     def remove(self, key):
         """
@@ -41,14 +41,14 @@ class CopyPastaController:
         :param key: key of the copypasta to be removed
         :return: status = if the copy pasta was found and removed or not
         """
-        status = self.pastas.remove_pasta(key)
-        self.pastas.save_dict_to_file()
+        status = self.quotes.removeQuote(key)
+        self.quotes.saveDict()
         return status
 
-    def removeByValue(self, key):
-        status = self.pastas.removeSauce(
+    def removeByQuote(self, key):
+        status = self.quotes.removeByQuote(
             key)
-        self.pastas.save_dict_to_file()
+        self.quotes.saveDict()
         return status
 
     # if that then do this
@@ -57,11 +57,11 @@ class CopyPastaController:
         Returns the dictionary of copypastas
         :return: dictionary
         """
-        return self.pastas.pasta_dict
+        return self.quotes.quotesDict
 
     def update_to_access_bits(self):
-        self.pastas.update_to_access_bits()
+        self.quotes.update_to_access_bits()
 
-    def set_bits(self, msg):
-        self.pastas.load_dict_from_file()
-        return self.pastas.set_bits_value(msg)
+    def set_bits(self, key, bits):
+        self.quotes.loadDict()
+        return self.quotes.setBits(key, bits)

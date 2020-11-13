@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from classified.bot_token.token import bot_token
-from src.commands.copypasta.EventFunction import copypasta_on_msg, blacklistCheck
+from src.commands.copypasta.EventFunction import quoteMsg, blacklistCheck
 from src.commands.Reactions.EventFunction import react_to_msg
 from src.commands.Google.eventFunction import translate
 from src.commands.Settings.controller import SettingsController
@@ -112,7 +112,7 @@ async def on_message(message):
 
     await client.process_commands(message)
     await react_to_msg(message, client)
-    await copypasta_on_msg(message)
+    await quoteMsg(message)
     await blacklistCheck(message)
     await translate(message)
 
