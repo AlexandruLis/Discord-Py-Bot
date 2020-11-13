@@ -1,5 +1,5 @@
 from discord.ext import commands
-from src.commands.copypasta.controller import QuotesController
+from src.commands.Quotes.controller import QuotesController
 from src.core.Validation import validateAdmin
 
 

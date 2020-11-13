@@ -1,4 +1,4 @@
-from src.commands.copypasta.copypastas import Quotes
+from src.commands.Quotes.Quotes import Quotes
 from classified.globals import quotes_file_path
 
 
@@ -30,7 +30,7 @@ class QuotesController:
         :param key: a string/ key / message that triggers a keyword
         :return: quote
         """
-        return self.quotes.quotesDict[key]
+        return self.quotes.dict[key]
 
     def remove(self, key):
         """
@@ -54,10 +54,7 @@ class QuotesController:
         Returns the dictionary
         :return: dictionary
         """
-        return self.quotes.quotesDict
-
-    def update_to_access_bits(self):
-        self.quotes.update_to_access_bits()
+        return self.quotes.dict
 
     def set_bits(self, key, bits):
         self.quotes.loadDict()

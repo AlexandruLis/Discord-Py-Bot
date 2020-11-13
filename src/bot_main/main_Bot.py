@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from classified.bot_token.token import bot_token
-from src.commands.copypasta.EventFunction import quoteMsg, blacklistCheck
+from src.commands.Quotes.EventFunction import quoteMsg, blacklistCheck
 from src.commands.Reactions.EventFunction import react_to_msg
 from src.commands.Google.eventFunction import translate
 from src.commands.Settings.controller import SettingsController
@@ -157,7 +157,7 @@ client.load_extension("src.commands.Youtube.cog")
 client.load_extension("src.commands.Reddit.cog")
 client.load_extension("src.commands.Dictionary.cog")
 client.load_extension("src.commands.Reactions.cog")
-client.load_extension("src.commands.copypasta.cog")
+client.load_extension("src.commands.Quotes.cog")
 client.load_extension("src.commands.DiscordVoice.cog")
 client.load_extension("src.commands.RateGirl.cog")
 client.load_extension("src.commands.Blacklist.cog")

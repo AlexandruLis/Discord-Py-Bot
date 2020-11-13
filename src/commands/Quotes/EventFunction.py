@@ -1,4 +1,4 @@
-from src.commands.copypasta.controller import QuotesController
+from src.commands.Quotes.controller import QuotesController
 from src.commands.Blacklist.blacklistStorage import Blacklist
 from classified.globals import blacklist_file_path
 import time
@@ -9,8 +9,8 @@ last_used_time = 0  # A global cooldown time
 
 async def quoteMsg(message):
     """
-    Used to check if the message is  copy pasta.
-    Full implementation in copypasta
+    Used to check if the message is to Quote.
+    Full implementation in Quotes
     :param message: Discord.py message Class
     :return: None
     """
@@ -20,17 +20,17 @@ async def quoteMsg(message):
         # Non-Admin can't trigger during cd
         if last_used_time + 15 > time.time():
             return
-    if not SettingsController(message.guild).get_setting("copypasta", "respond"):
+    if not SettingsController(message.guild).get_setting("Quotes", "respond"):
         return
     quotesDict = QuotesController(message.guild).get_dict()  # Load the controller
     content = message.content
 
     if message.content in quotesDict:  # If the message is in the dict keys
         quoteData = quotesDict[content]  # Found
-        if quoteData[1] == 1:  # If bits for the copypasta are set to 1 remove the trigger message
+        if quoteData[1] == 1:  # If bits for the Quotes are set to 1 remove the trigger message
             await message.delete()
         # print(quotesController.get_dict())
-        await message.channel.send(quoteData[0])  # Print the copypasta
+        await message.channel.send(quoteData[0])  # Print the Quotes
         return
 
 

@@ -8,7 +8,6 @@ class Blacklist:
 
     def __init__(self, path):
         """
-        A file path where to store the dictionary of copypastas in a pickle format
         :param path: file name or true path
         """
         self.file_path = path  # Dictionary picke location

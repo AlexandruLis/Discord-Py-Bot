@@ -48,14 +48,14 @@ class BlacklistController:
     #     """
     #     Returns a copy pasta / message for key
     #     :param key: a string/ key / message that triggers a keyword
-    #     :return: string, a copypasta
+    #     :return: string, a Quotes
     #     """
     #     return self.pastas.pasta_dict[key]
 
     def remove(self, key):
         """
-        Removes a copypasta
-        :param key: key of the copypasta to be removed
+        Removes a Quotes
+        :param key: key of the Quotes to be removed
         :return: status = if the copy pasta was found and removed or not
         """
         status = self.pastas.remove_pasta(key)

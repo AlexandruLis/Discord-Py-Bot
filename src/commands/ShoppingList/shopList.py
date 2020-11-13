@@ -1,4 +1,4 @@
-from src.Interfaces.DefaultContainer import PickleDefaultContainer
+from src.core.Interfaces.DefaultContainer import PickleDefaultContainer
 
 
 class ShopList(PickleDefaultContainer):
