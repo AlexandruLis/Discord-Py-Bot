@@ -16,7 +16,7 @@ class RedditCog(commands.Cog):
     @commands.command()
     async def rsearch(self, ctx):
         """
-        Top post from reddit search
+        Top post from reddit search engine
         Prohibits nsfw posts from appearing in non-nsfw channels
         :param ctx: the full discord message from the user as a Context class from Discord.py
         :return:None
@@ -81,7 +81,7 @@ class RedditCog(commands.Cog):
     @commands.command()
     async def rtop(self, ctx):
         """
-        Top post from hot of subreddit
+        Top post from r/subreddit/hot
         :param ctx: the full discord message from the user as a Context class from Discord.py
         :return: None
         """

@@ -14,9 +14,9 @@ class YoutubeCog(commands.Cog):
         self.client = bot
 
     @commands.command()
-    async def ytm(self, ctx):
+    async def yt(self, ctx):
         """
-        First result from youtube of a topic
+        First result from youtube
         :param ctx: the full discord message from the user as a Context class from Discord.py
         :return:
         """
@@ -24,9 +24,9 @@ class YoutubeCog(commands.Cog):
         await ctx.message.channel.send(YouTube().find_first(search))
 
     @commands.command()
-    async def randyt(self, ctx):
+    async def ryt(self, ctx):
         """
-        Random result of a topic from youtube
+        Random result from search
         :param ctx: the full discord message from the user as a Context class from Discord.py
         :return:
         """

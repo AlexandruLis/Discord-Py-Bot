@@ -214,6 +214,7 @@ class MiscellaneousCog(commands.Cog):
         character = ctx.message.content.split()[1:]
         character = [word.lower().capitalize() if word.lower() != 'of' else word.lower() for word in character]
         name = str('_'.join(character))
+        print(name)
         try:
             r = requests.get(
                 "https://azurlane.koumakan.jp/w/index.php?search=" + name)  # goes to link for word
@@ -223,7 +224,10 @@ class MiscellaneousCog(commands.Cog):
             colors = {'Plum': 0xcc00cc, 'PaleGoldenrod': 0xffff00, 'background-image': 0xFF0000, 'PowderBlue': 0x3399FF,
                       'Gainsboro': 0xC0C0C0}
             # print(soup.select('table > tbody')[0].find_all('td')[1].attrs['style'])
-            color = colors[soup.select('table > tbody')[0].find_all('td')[1].attrs['style'].split(':')[1]]
+            try:
+                color = colors[soup.select('table > tbody')[0].find_all('td')[1].attrs['style'].split(':')[1]]
+            except IndexError:
+                return
             #
 
             # Grab the stats of the ship
@@ -245,28 +249,29 @@ class MiscellaneousCog(commands.Cog):
                     break
                 i += 1
 
-            for a in soup.find_all('a'):
-                result = a.get('href')
+            for a in soup.find_all('img'):
+                result = a['src']
                 if type(result) is str:
                     if result.find(name + ".png") != -1:
-                        if result.find("https") != -1:
                             # print(result)
                             embed = discord.Embed(title=name, description="Level 120 Stats", color=color)
-                            embed.set_image(url=result)
+                            embed.set_image(url="https://azurlane.koumakan.jp" + result)
                             embed.add_field(name="HP", value=fields[0], inline=True)
                             embed.add_field(name="Armor", value=fields[1], inline=True)
                             embed.add_field(name="Reload", value=fields[2], inline=True)
                             embed.add_field(name="Luck", value=fields[3], inline=True)
                             embed.add_field(name="FP", value=fields[4], inline=True)
                             embed.add_field(name="Torp", value=fields[5], inline=True)
-                            embed.add_field(name="Eva", value=fields[7], inline=True)
+                            embed.add_field(name="Eva", value=fields[6], inline=True)
                             embed.add_field(name="Speed", value=fields[8], inline=True)
                             embed.add_field(name="AA", value=fields[9], inline=True)
                             embed.add_field(name="Air", value=fields[10], inline=True)
                             embed.add_field(name="Oil", value=fields[11], inline=True)
                             embed.add_field(name="Acc", value=fields[12], inline=True)
+                            embed.add_field(name="Sub", value=fields[13], inline=True)
                             await ctx.channel.send(embed=embed)
-        except KeyError:
+                            return
+        except KeyError or IndexError:
             print("No results")
 
     @staticmethod
